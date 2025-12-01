@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="text-center mb-5">
+            <h2>Mentoria de Feedback Inclusivo</h2>
+            <p class="lead text-muted">
+                Nossa IA ajuda você a eliminar vieses inconscientes antes de enviar feedbacks.
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <form>
+                            {% csrf_token %}
+                            <label class="form-label fw-bold">Escreva seu feedback aqui:</label>
+                            {{ form.texto_original }}
+                            <small class="text-muted mt-2 d-block">A IA analisa automaticamente ao parar de digitar.</small>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow h-100 bg-light">
+                    <div class="card-body d-flex align-items-center justify-content-center" id="resultado-analise">
+                        <p class="text-muted text-center">
+                            <i class="bi bi-robot fs-1"></i><br>
+                            O resultado da análise aparecerá aqui.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

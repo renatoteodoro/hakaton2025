@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-cloud-upload"></i> Upload de Reunião</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted small">
+                    Faça o upload do áudio (MP3/WAV). A IA irá transcrever, identificar os falantes e gerar a ata acessível automaticamente.
+                </p>
+                
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Título da Reunião</label>
+                        {{ form.titulo }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Data e Hora</label>
+                        {{ form.data_reuniao }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Arquivo de Áudio</label>
+                        {{ form.arquivo_audio }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Participantes</label>
+                        {{ form.participantes }}
+                        <small class="text-muted">Segure CTRL para selecionar vários.</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-magic"></i> Enviar e Processar com IA
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,6 @@
+django
+openai
+python-decouple
+pillow
+# Opcional para manipular audio se necessario
+pydub

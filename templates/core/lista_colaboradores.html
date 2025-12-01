@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 text-gray-800">Colaboradores Monitorados</h2>
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-sm">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 bg-primary text-white">
+        <h6 class="m-0 fw-bold"><i class="bi bi-people-fill"></i> Perfis de Inclusão</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered" width="100%" cellspacing="0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Cargo / Depto</th>
+                        <th>Deficiência (Autodeclarada)</th>
+                        <th>Pref. Comunicação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in colaboradores %}
+                    <tr>
+                        <td class="align-middle fw-bold">
+                            {{ c.user.get_full_name|default:c.user.username }}
+                        </td>
+                        <td class="align-middle">
+                            {{ c.cargo }} <br>
+                            <small class="text-muted">{{ c.departamento }}</small>
+                        </td>
+                        <td class="align-middle">
+                            {% if c.deficiencia == 'NENHUMA' %}
+                                <span class="badge bg-light text-dark border">Nenhuma</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-exclamation-circle"></i> {{ c.get_deficiencia_display }}
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="align-middle">
+                            {% if c.preferencia_comunicacao == 'TEXTO' %}
+                                <span class="badge bg-info text-dark"><i class="bi bi-chat-text"></i> Texto/Chat</span>
+                            {% elif c.preferencia_comunicacao == 'LIBRAS' %}
+                                <span class="badge bg-primary"><i class="bi bi-hand-thumbs-up"></i> LIBRAS</span>
+                            {% elif c.preferencia_comunicacao == 'LEITURA_LABIAL' %}
+                                <span class="badge bg-danger"><i class="bi bi-camera-video"></i> Leitura Labial</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Áudio</span>
+                            {% endif %}
+                        </td>
+                        <td class="align-middle text-center">
+                            <button class="btn btn-sm btn-outline-primary" title="Editar Perfil (Demo)">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">
+                            Nenhum perfil de colaborador cadastrado ainda.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

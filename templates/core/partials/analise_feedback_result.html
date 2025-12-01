@@ -1,0 +1,8 @@
+{% if mensagem %}
+    <p class="text-muted text-center">{{ mensagem }}</p>
+{% else %}
+    <div class="w-100">
+        <h5 class="mb-3">Análise de Viés:</h5>
+        {{ analise|safe }}
+    </div>
+{% endif %}

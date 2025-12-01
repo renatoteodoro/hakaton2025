@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 text-gray-800 mb-1">{{ reuniao.titulo }}</h1>
+        
+        <div>
+            <small class="text-muted fw-bold text-uppercase me-2">Participantes:</small>
+            {% for participante in reuniao.participantes.all %}
+                <span class="badge rounded-pill bg-secondary me-1">
+                    <i class="bi bi-person-fill"></i> {{ participante.get_full_name|default:participante.username }}
+                </span>
+            {% empty %}
+                <span class="text-muted small">Nenhum participante vinculado.</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <span class="badge bg-success p-2 fs-6">
+        <i class="bi bi-check-circle"></i> Acessibilidade Ativa
+    </span>
+</div>
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-body bg-light">
+        <label class="fw-bold mb-2"><i class="bi bi-volume-up"></i> Áudio Original:</label>
+        {% if reuniao.arquivo_audio %}
+            <audio controls class="w-100">
+                <source src="{{ reuniao.arquivo_audio.url }}" type="audio/mpeg">
+                Seu navegador não suporta áudio.
+            </audio>
+        {% else %}
+            <p class="text-danger">Áudio não disponível.</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow mb-4 h-100">
+            <div class="card-header py-3 bg-white">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="bi bi-file-text"></i> Transcrição Literal (Whisper)
+                </h6>
+            </div>
+            <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                {% if reuniao.transcricao_completa %}
+                    <div class="text-muted" style="white-space: pre-wrap;">{{ reuniao.transcricao_completa }}</div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status"></div>
+                        <p class="mt-2">A IA está processando...</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow mb-4 h-100 border-left-info">
+            <div class="card-header py-3 bg-info text-white">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="bi bi-stars"></i> Insights & Autoria (GPT-4)
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if reuniao.resumo_executivo %}
+                    {{ reuniao.resumo_executivo|safe }}
+                {% else %}
+                    <p class="text-muted">Aguardando processamento da IA para gerar créditos e resumo...</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

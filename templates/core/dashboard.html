@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2 class="h3 mb-0 text-gray-800">Painel de Inclusão</h2>
+        <p class="text-muted">Visão geral da acessibilidade na sua equipe.</p>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{% url 'upload_reuniao' %}" class="btn btn-primary">
+            <i class="bi bi-mic-fill"></i> Processar Nova Reunião
+        </a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card border-left-primary h-100 py-2">
+            <div class="card-body">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reuniões Acessíveis</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_reunioes }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <a href="{% url 'lista_colaboradores' %}" class="text-decoration-none">
+            <div class="card border-left-success h-100 py-2 shadow-sm hover-effect">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                        Colaboradores Apoiados (PCD) <i class="bi bi-box-arrow-up-right small"></i>
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ colaboradores_cadastrados }}</div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-left-info h-100 py-2">
+            <div class="card-body">
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Status LBI</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">Conforme ✅</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Últimas Reuniões Processadas</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Título</th>
+                        <th>Status IA</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reuniao in reunioes %}
+                    <tr>
+                        <td>{{ reuniao.data_reuniao|date:"d/m/Y H:i" }}</td>
+                        <td>{{ reuniao.titulo }}</td>
+                        <td>
+                            {% if reuniao.status_ia == 'CONCLUIDO' %}
+                                <span class="badge bg-success">Acessível</span>
+                            {% elif reuniao.status_ia == 'ERRO' %}
+                                <span class="badge bg-danger">Erro</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Processando...</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'detalhe_reuniao' reuniao.pk %}" class="btn btn-sm btn-info text-white">
+                                <i class="bi bi-eye"></i> Visualizar Ata
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">Nenhuma reunião gravada ainda.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
