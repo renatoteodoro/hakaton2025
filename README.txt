@@ -9,8 +9,7 @@ PASSOS PARA CLONAR O PROJETO:
 2. Abra o terminal ou prompt de comando.
 
 3. Execute o comando para clonar o repositório:
-   git clone https://github.com/seuusuario/hakaton2025.git
-   (Substitua "seuusuario" pelo nome do usuário do GitHub onde o repositório está hospedado.)
+   git clone https://github.com/renatoteodoro/hakaton2025.git
 
 4. Entre no diretório do projeto clonado:
    cd hakaton2025
